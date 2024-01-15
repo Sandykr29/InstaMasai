@@ -1,9 +1,11 @@
 const express=require("express")
-const {connection}=require("./db")
+const {connection}=require("./db");
+const { userRouter } = require("./route/user.route");
 
 const app=express();
 
-app.use(expree.json());
+app.use(express.json());
+app.use("/users",userRouter)
 
 app.listen(8000,async()=>{
     try {
