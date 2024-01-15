@@ -5,7 +5,8 @@ const postSchema=mongoose.Schema({
     body:String,
     device:String,
     no_of_comments:Number,
-    userId:String
+    userID:String,
+    email:String
 },{
     versionKey:false
 })

@@ -24,7 +24,7 @@ postRouter.post("/",async(req,res)=>{
 postRouter.post("/update/:id",async(req,res)=>{
     let {id}=req.params;
     try {
-        let post = await PostModel.findOne({_id:id});
+        let post =await PostModel.find({_id:req.body.userID});
         if(!post){return req.status(200).send({msg:"Invalid Post.."})}
 
         await PostModel.findByIdAndUpdate({_id:id},req.body);

@@ -30,7 +30,7 @@ userRouter.post("/login",async(req,res)=>{
         let match=await bcrypt.compare(password,user.password);
         if(!match){return res.status(200).send({msg:"Check Password..."})}
 
-        var token = jwt.sign({ userID:user._id }, 'user',{ expiresIn: "7d" });
+        var token = jwt.sign({ userID:user._id,email:user.email }, 'user',{ expiresIn: "7d" });
 
         res.status(200).send({msg:"Login Successfull!",token})
 
