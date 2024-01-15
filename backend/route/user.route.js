@@ -2,7 +2,7 @@ const express=require("express")
 
 const {UserModel}=require("../model/user.model")
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken')
 const userRouter=express.Router();
 
 userRouter.post("/register",async(req,res)=>{
@@ -29,8 +29,19 @@ userRouter.post("/login",async(req,res)=>{
     try {
         let user=await UserModel.find({email})
         if(!user){return res.status(200).send({msg:"User does not exist, please register..."})};
-        
+
+        let match=await bcrypt.compare(password.user.password);
+        if(!match){return res.status(200).send({msg:"Check Password..."})}
+
+        var token = jwt.sign({ userID:user._id }, 'user',{ expiresIn: "7d" });
+
+        res.status(200).send({msg:"Login Successfull!",token})
+
     } catch (error) {
         res.status(400).send({error:error.message})
     }
 })
+
+module.exports={
+    userRouter
+}
